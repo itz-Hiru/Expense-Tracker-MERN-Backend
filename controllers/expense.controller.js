@@ -29,7 +29,18 @@ exports.addExpense = async (req, res) => {
   }
 };
 
-exports.getAllExpenses = async (req, res) => {};
+exports.getAllExpenses = async (req, res) => {
+  const userId = req.user.id;
+  
+    try {
+      const expense = await Expense.find({ userId }).sort({ date: -1 });
+      res.status(200).json(expense);
+    } catch (e) {
+      res
+        .status(500)
+        .json({ message: "Error while getting incomes ", error: e.message });
+    }
+};
 
 exports.deleteExpense = async (req, res) => {};
 
