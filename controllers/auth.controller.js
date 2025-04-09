@@ -35,10 +35,36 @@ exports.registerUser = async (req, res) => {
       token: generateToken(user._id),
     });
   } catch (e) {
-    res.status(500).json({ message: "Error while registering user ", error: e.message });
+    res
+      .status(500)
+      .json({ message: "Error while registering user ", error: e.message });
   }
 };
 
-exports.loginUser = async (req, res) => {};
+exports.loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res
+      .status(404)
+      .json({ message: "Please fill all required fields before login!" });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user || !(await user.comparePassword(password))) {
+      return res.status(404).json({ message: "Invalid credentials!" });
+    }
+    
+    res.status(200).json({
+      id: user._id,
+      user,
+      token: generateToken(user._id),
+    });
+  } catch (e) {
+    res.status(500).json({ message: "Error while login ", error: e.message });
+  }
+};
 
 exports.getUserInfo = async (req, res) => {};
