@@ -1,4 +1,4 @@
-const { isValidObjectId, Types } = require("mongoose");
+const { Types } = require("mongoose");
 const Income = require("../models/Income.model");
 const Expense = require("../models/Expense.model");
 
@@ -68,11 +68,9 @@ exports.getDashboardData = async (req, res) => {
       recentTransactions: last5Transactions,
     });
   } catch (e) {
-    res
-      .status(500)
-      .json({
-        message: "Error while fetching dashboard data ",
-        error: e.message,
-      });
+    res.status(500).json({
+      message: "Error while fetching dashboard data ",
+      error: e.message,
+    });
   }
 };

@@ -1,10 +1,10 @@
 const express = require("express");
 const {
-    addExpense,
-    getAllExpenses,
-    deleteExpense,
-    downloadExpensesExcel
-} = require ("../controllers/expense.controller");
+  addExpense,
+  getAllExpenses,
+  deleteExpense,
+  downloadExpensesExcel,
+} = require("../controllers/expense.controller");
 const { protect } = require("../middleware/auth.middleware");
 
 const router = express.Router();
