@@ -6,3 +6,4 @@ cors
 bcryptjs
 multer
 xlsx
+nodemob(dev dependency)
