@@ -5,6 +5,7 @@ const path = require("path");
 const connectDB = require("./config/db.config");
 const authRoutes = require("./routes/auth.routes");
 const incomeRoutes = require("./routes/income.routes");
+const expenseRoutes = require("./routes/expense.routes");
 
 const app = express();
 
@@ -22,6 +23,7 @@ connectDB();
 app.use("/v1/auth", authRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/income", incomeRoutes);
+app.use("/expense", expenseRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
