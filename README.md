@@ -77,10 +77,10 @@ npm run dev
 ### 🔐 Authentication
 - `POST /v1/auth/register` – Register a new user
 - `POST /v1/auth/login` – Login existing user
-- `GET /v1/auth/getUser` – Get user details
+- `GET /v1/auth/get/user` – Get user details
 
 ### 🖼 Image Uploading Routes
-- `POST /v1/auth/upload-image` – Upload a new profile picture
+- `POST /v1/auth/uploads/image` – Upload a new profile picture
 
 ### 💰 Income Routes
 - `POST /income/add` – Add income
@@ -95,7 +95,7 @@ npm run dev
 - `GET /expense/get/download` – Download expense data in excel sheet
 
 ### 📊 Reports
-- `GET /dashboard/data` – Get income/expense stats
+- `GET /dashboard/stats` – Get income/expense stats
 
 > ✅ All protected routes require a valid JWT token in the `Authorization` header.
 

@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post("/register", registerUser);
 
-router.post("/upload-image", upload.single("image"), (req, res) => {
+router.post("/uploads/image", upload.single("image"), (req, res) => {
   if (!req.file) {
     return res.status(404).json("No files choosen for update!");
   }
@@ -24,6 +24,6 @@ router.post("/upload-image", upload.single("image"), (req, res) => {
 
 router.post("/login", loginUser);
 
-router.get("/getUser", protect, getUserInfo);
+router.get("/get/user", protect, getUserInfo);
 
 module.exports = router;
