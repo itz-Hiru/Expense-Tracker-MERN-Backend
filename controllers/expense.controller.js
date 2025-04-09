@@ -53,4 +53,28 @@ exports.deleteExpense = async (req, res) => {
   }
 };
 
-exports.downloadExpensesExcel = async (req, res) => {};
+exports.downloadExpensesExcel = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const expenses = await Expense.find({ userId }).sort({ date: -1 });
+    const data = expenses.map((item) => ({
+      Source: item.source,
+      Amount: item.amount,
+      Date: item.date,
+    }));
+
+    const wb = xlsx.utils.book_new();
+    const ws = xlsx.utils.json_to_sheet(data);
+
+    xlsx.utils.book_append_sheet(wb, ws, "Expense");
+    xlsx.writeFile(wb, "Expense Details.xlsx");
+
+    res.download("Expense Details.xlsx");
+  } catch (e) {
+    res.status(500).json({
+      message: "Error while downloading excel sheet ",
+      error: e.message,
+    });
+  }
+};
