@@ -1,4 +1,4 @@
-const User = require("../models/User.model");
+const xlsx = require("xlsx");
 const Income = require("../models/Income.model");
 
 exports.addIncome = async (req, res) => {
@@ -53,4 +53,28 @@ exports.deleteIncome = async (req, res) => {
   }
 };
 
-exports.downloadIncomesExcel = async (req, res) => {};
+exports.downloadIncomesExcel = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const incomes = await Income.find({ userId }).sort({ date: -1 });
+    const data = incomes.map((item) => ({
+      Source: item.source,
+      Amount: item.amount,
+      Date: item.date,
+    }));
+
+    const wb = xlsx.utils.book_new();
+    const ws = xlsx.utils.json_to_sheet(data);
+
+    xlsx.utils.book_append_sheet(wb, ws, "Income");
+    xlsx.writeFile(wb, "Income Details.xlsx");
+
+    res.download("Income Details.xlsx");
+  } catch (e) {
+    res.status(500).json({
+      message: "Error while downloading excel sheet ",
+      error: e.message,
+    });
+  }
+};
