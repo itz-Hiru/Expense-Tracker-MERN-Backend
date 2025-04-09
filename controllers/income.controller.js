@@ -26,6 +26,16 @@ exports.addIncome = async (req, res) => {
     }
 };
 
-exports.getAllIncomes = async (req, res) => {};
+exports.getAllIncomes = async (req, res) => {
+    const userId = req.user.id;
+
+    try {
+        const income = await Income.find({ userId }).sort({ date: -1 });
+        res.status(200).json(income);
+    } catch (e) {
+        res.status(500).json({ message: "Error while getting incomes ", error: e.message});
+    }
+};
+
 exports.deleteIncome = async (req, res) => {};
 exports.downloadIncomesExcel = async (req, res) => {};
