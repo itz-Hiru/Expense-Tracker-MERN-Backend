@@ -4,6 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const connectDB = require("./config/db.config");
 const authRoutes = require("./routes/auth.routes");
+const dashboardRoutes = require("./routes/dashboard.routes");
 const incomeRoutes = require("./routes/income.routes");
 const expenseRoutes = require("./routes/expense.routes");
 
@@ -22,6 +23,7 @@ app.use(express.json());
 connectDB();
 app.use("/v1/auth", authRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/dashboard", dashboardRoutes);
 app.use("/income", incomeRoutes);
 app.use("/expense", expenseRoutes);
 
