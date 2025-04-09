@@ -56,7 +56,7 @@ exports.loginUser = async (req, res) => {
     if (!user || !(await user.comparePassword(password))) {
       return res.status(404).json({ message: "Invalid credentials!" });
     }
-    
+
     res.status(200).json({
       id: user._id,
       user,
@@ -67,4 +67,16 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-exports.getUserInfo = async (req, res) => {};
+exports.getUserInfo = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found!"});
+    }
+
+    res.status(200).json(user);
+  } catch (e) {
+    res.status(500).json({ message: "Error while getting user details ", error: e.message});
+  }
+};
